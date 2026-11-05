@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alex Rivera | Solana Mobile & Web3 Engineer CV</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        solana: {
+                            obsidian: '#0A0B10',
+                            purple: '#9945FF',
+                            emerald: '#14F195',
+                            card: '#12141F',
+                            border: '#1E2235',
+                            glow: 'rgba(153, 69, 255, 0.15)',
+                            emeraldGlow: 'rgba(20, 241, 149, 0.15)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        grotesk: ['Space Grotesk', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow-shift': 'glowShift 8s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        glowShift: {
+                            '0%': { opacity: '0.4', transform: 'scale(1)' },
+                            '100%': { opacity: '0.75', transform: 'scale(1.04)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0B10;
+            color: #F3F4F6;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .fluid-heading {
+            font-size: clamp(2.2rem, 5vw + 1rem, 4.5rem);
+            line-height: 1.1;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-card {
+            background: rgba(18, 20, 31, 0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(30, 34, 53, 0.8);
+        }
+        .glass-card:hover {
+            border-color: rgba(153, 69, 255, 0.45);
+            box-shadow: 0 0 30px rgba(153, 69, 255, 0.12);
+        }
+        .mesh-gradient {
+            position: absolute;
+            width: min(500px, 90vw);
+            height: min(500px, 90vw);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(153, 69, 255, 0.16) 0%, rgba(20, 241, 149, 0.07) 55%, transparent 75%);
+            filter: blur(90px);
+            z-index: -1;
+            pointer-events: none;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0B10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E2235;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9945FF;
+        }
+        /* Print styles */
+        @media print {
+            body { background: #ffffff !important; color: #000000 !important; }
+            .no-print { display: none !important; }
+            .glass-card { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; box-shadow: none !important; }
+            .gradient-text { background: none !important; -webkit-text-fill-color: #9945FF !important; }
+        }
+    </style>
+</head>
+<body class="bg-solana-obsidian text-slate-100 antialiased selection:bg-solana-purple selection:text-white">
+
+    <!-- Background Ambient Glows -->
+    <div class="mesh-gradient top-[-100px] left-[-100px] animate-glow-shift"></div>
+    <div class="mesh-gradient top-[35%] right-[-150px] animate-glow-shift" style="animation-delay: 4s;"></div>
+    <div class="mesh-gradient bottom-[-100px] left-[25%] animate-glow-shift" style="animation-delay: 2s;"></div>
+
+    <!-- Toast Notification System -->
+    <div id="toast-container" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4"></div>
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-card border-b border-solana-border/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3 group shrink-0">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-solana-purple to-solana-emerald p-0.5 flex items-center justify-center shadow-lg shadow-solana-purple/20 group-hover:scale-105 transition-transform">
+                    <div class="w-full h-full bg-solana-obsidian rounded-[10px] flex items-center justify-center">
+                        <i data-lucide="smartphone" class="w-4 h-4 sm:w-5 sm:h-5 text-solana-emerald"></i>
+                    </div>
+                </div>
+                <div class="min-w-0">
+                    <span class="font-heading font-bold text-sm sm:text-lg tracking-tight text-white block truncate">Alex Rivera</span>
+                    <span class="text-[10px] sm:text-xs font-mono text-solana-emerald tracking-wider uppercase block truncate">solanamobile.cv</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-6 lg:gap-8 font-medium text-sm">
+                <a href="#about" class="text-slate-400 hover:text-solana-emerald transition-colors">About</a>
+                <a href="#experience" class="text-slate-400 hover:text-solana-emerald transition-colors">Experience</a>
+                <a href="#projects" class="text-slate-400 hover:text-solana-emerald transition-colors">Projects</a>
+                <a href="#skills" class="text-slate-400 hover:text-solana-emerald transition-colors">Skills</a>
+                <a href="#contact" class="text-slate-400 hover:text-solana-emerald transition-colors">Contact</a>
+            </nav>
+
+            <div class="hidden md:flex items-center gap-4 shrink-0">
+                <button onclick="downloadCV()" class="px-4 py-2 rounded-xl glass-card text-xs font-mono text-slate-300 hover:text-white hover:border-solana-purple transition-all flex items-center gap-1.5">
+                    <i data-lucide="download" class="w-3.5 h-3.5 text-solana-emerald"></i>
+                    <span>PDF CV</span>
+                </button>
+                <a href="#contact" class="relative group overflow-hidden rounded-xl p-px font-semibold text-xs sm:text-sm">
+                    <span class="absolute inset-0 bg-gradient-to-r from-solana-purple to-solana-emerald group-hover:opacity-95 transition-opacity"></span>
+                    <span class="relative block px-4 sm:px-5 py-2.5 rounded-[11px] bg-solana-obsidian text-white group-hover:bg-opacity-0 transition-all">
+                        Hire Architect
+                    </span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden p-2 rounded-xl text-slate-300 hover:text-white glass-card focus:outline-none shrink-0" aria-label="Toggle Menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Fully Responsive Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden glass-card border-t border-solana-border px-6 py-6 space-y-4 shadow-2xl transition-all">
+            <a href="#about" class="block text-slate-200 hover:text-solana-emerald font-medium py-2 transition-colors mobile-link">About</a>
+            <a href="#experience" class="block text-slate-200 hover:text-solana-emerald font-medium py-2 transition-colors mobile-link">Experience</a>
+            <a href="#projects" class="block text-slate-200 hover:text-solana-emerald font-medium py-2 transition-colors mobile-link">Projects</a>
+            <a href="#skills" class="block text-slate-200 hover:text-solana-emerald font-medium py-2 transition-colors mobile-link">Skills</a>
+            <a href="#contact" class="block text-slate-200 hover:text-solana-emerald font-medium py-2 transition-colors mobile-link">Contact</a>
+            <div class="pt-4 border-t border-solana-border flex flex-col gap-3">
+                <button onclick="downloadCV()" class="w-full py-3 rounded-xl glass-card text-xs font-mono text-slate-200 flex items-center justify-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4 text-solana-emerald"></i>
+                    <span>Download CV (PDF)</span>
+                </button>
+                <a href="#contact" class="w-full text-center py-3 rounded-xl bg-gradient-to-r from-solana-purple to-solana-emerald text-white font-semibold mobile-link shadow-lg shadow-solana-purple/20">
+                    Hire Architect
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <main class="pt-16 sm:pt-20 w-full overflow-hidden">
+
+        <!-- Hero Section -->
+        <section class="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-20">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6 sm:space-y-8 text-center lg:text-left">
+                    <!-- Live Ticker Badge with full responsiveness & text ellipsis -->
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card border border-solana-purple/30 text-xs font-mono text-solana-emerald max-w-full overflow-hidden">
+                        <span class="w-2 h-2 rounded-full bg-solana-emerald animate-ping shrink-0"></span>
+                        <span class="truncate" id="tps-ticker">Solana Mainnet-Beta: 3,484 TPS • Seeker & Saga Ready</span>
+                    </div>
+
+                    <h1 class="fluid-heading font-extrabold tracking-tight">
+                        Building the <span class="gradient-text">Solana Mobile</span> Frontier.
+                    </h1>
+
+                    <p class="text-sm sm:text-lg lg:text-xl text-slate-400 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Senior Solana Mobile & Web3 Engineer specializing in high-performance dApps, <span class="text-white font-semibold">Seed Vault hardware security</span>, Solana Seeker integration, and native SDK wrappers for Solana Mobile Stack (SMS).
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 pt-2">
+                        <a href="#projects" class="w-full sm:w-auto px-6 sm:px-8 py-4 rounded-xl bg-gradient-to-r from-solana-purple to-solana-emerald text-solana-obsidian font-bold hover:opacity-95 shadow-lg shadow-solana-purple/25 transition-all flex items-center justify-center gap-2 text-sm sm:text-base">
+                            <span>Explore Projects</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 shrink-0"></i>
+                        </a>
+                        <a href="#contact" class="w-full sm:w-auto px-6 sm:px-8 py-4 rounded-xl glass-card font-semibold text-white hover:border-solana-purple transition-all flex items-center justify-center gap-2 text-sm sm:text-base">
+                            <i data-lucide="terminal" class="w-5 h-5 text-solana-emerald shrink-0"></i>
+                            <span>Get in Touch</span>
+                        </a>
+                    </div>
+
+                    <!-- Quick Meta Info -->
+                    <div class="pt-6 grid grid-cols-3 gap-2 sm:gap-4 border-t border-solana-border/60 max-w-lg mx-auto lg:mx-0">
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold font-mono text-white">16+</div>
+                            <div class="text-[11px] sm:text-xs text-slate-400 mt-1">dApps Shipped</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold font-mono text-solana-emerald">250k+</div>
+                            <div class="text-[11px] sm:text-xs text-slate-400 mt-1">Store Downloads</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl sm:text-3xl font-extrabold font-mono text-solana-purple">4.8k+</div>
+                            <div class="text-[11px] sm:text-xs text-slate-400 mt-1">GitHub Commits</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Card / Terminal Simulation -->
+                <div class="lg:col-span-5 flex justify-center w-full">
+                    <div class="w-full max-w-md glass-card rounded-2xl p-5 sm:p-6 shadow-2xl relative overflow-hidden group">
+                        <!-- Decorative top bar -->
+                        <div class="flex items-center justify-between pb-3 sm:pb-4 mb-4 border-b border-solana-border">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                                <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                                <span class="w-3 h-3 rounded-full bg-solana-emerald/80"></span>
+                            </div>
+                            <span class="text-xs font-mono text-slate-400 flex items-center gap-1.5 truncate">
+                                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-solana-emerald shrink-0"></i>
+                                solana-seeker-node.rs
+                            </span>
+                        </div>
+
+                        <!-- Terminal Code Block -->
+                        <div class="font-mono text-xs sm:text-sm text-slate-300 space-y-2 bg-solana-obsidian/90 p-4 rounded-xl border border-solana-border/50 overflow-x-auto">
+                            <p class="text-solana-purple">$ solana-mobile-cli --version</p>
+                            <p class="text-slate-400">solana-mobile-stack 2.4.0 (Seeker Optimized)</p>
+                            <p class="text-solana-purple pt-1">$ seeker-vault --init</p>
+                            <p class="text-solana-emerald">&gt; Initializing Seed Vault Enclave...</p>
+                            <p class="text-solana-emerald">&gt; Hardware biometric signature verified.</p>
+                            <p class="text-solana-purple pt-1">$ build-action --blink</p>
+                            <p class="text-white">&gt; Status: <span class="text-solana-emerald font-bold">DEPLOYED [0.12s]</span></p>
+                        </div>
+
+                        <!-- Floating Badges -->
+                        <div class="mt-5 grid grid-cols-2 gap-3">
+                            <div class="p-3 rounded-xl bg-solana-obsidian/60 border border-solana-border flex items-center gap-3">
+                                <div class="p-2 rounded-lg bg-solana-purple/20 text-solana-purple shrink-0">
+                                    <i data-lucide="cpu" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-[10px] sm:text-xs text-slate-400 truncate">Architecture</div>
+                                    <div class="text-xs font-bold text-white truncate">Mobile Web3 SDK</div>
+                                </div>
+                            </div>
+                            <div class="p-3 rounded-xl bg-solana-obsidian/60 border border-solana-border flex items-center gap-3">
+                                <div class="p-2 rounded-lg bg-solana-emerald/20 text-solana-emerald shrink-0">
+                                    <i data-lucide="zap" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-[10px] sm:text-xs text-slate-400 truncate">Finality</div>
+                                    <div class="text-xs font-bold text-white truncate">&lt; 400ms Speed</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Stats Bar Section -->
+        <section class="py-10 sm:py-12 border-y border-solana-border bg-solana-card/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
+                    <div class="space-y-1">
+                        <div class="text-3xl sm:text-4xl font-extrabold font-mono gradient-text">100%</div>
+                        <div class="text-xs sm:text-sm font-medium text-slate-400">On-Chain Verified Code</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="text-3xl sm:text-4xl font-extrabold font-mono text-white">4+ Years</div>
+                        <div class="text-xs sm:text-sm font-medium text-slate-400">Solana Ecosystem Exp.</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="text-3xl sm:text-4xl font-extrabold font-mono text-solana-emerald">5M+ TXs</div>
+                        <div class="text-xs sm:text-sm font-medium text-slate-400">Processed via Mobile SDKs</div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="text-3xl sm:text-4xl font-extrabold font-mono text-solana-purple">3</div>
+                        <div class="text-xs sm:text-sm font-medium text-slate-400">Solana Hacker House Wins</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About & Expertise Section -->
+        <section id="about" class="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 items-center">
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-card text-xs font-mono text-solana-purple">
+                        <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                        About Me
+                    </div>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">
+                        Bridging high-speed decentralized finance with mobile native ergonomics.
+                    </h2>
+                    <p class="text-slate-400 leading-relaxed text-sm sm:text-base">
+                        I'm Alex, a passionate Web3 and Mobile Architect deeply embedded in the Solana ecosystem since 2021. My mission is bridging complex cryptographic primitives with everyday mobile users through seamless, secure, lightning-fast interfaces.
+                    </p>
+                    <p class="text-slate-400 leading-relaxed text-sm sm:text-base">
+                        Working directly with Solana Mobile Stack (SMS), Solana Seeker, Saga hardware, and custom Anchor smart contracts, I build applications combining Web2 consumer polish with uncompromising Web3 decentralization.
+                    </p>
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-3 pt-2 text-xs sm:text-sm text-slate-300">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-solana-emerald shrink-0"></i>
+                            San Francisco / Remote
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="briefcase" class="w-4 h-4 text-solana-purple shrink-0"></i>
+                            Open to Senior Roles & Advisory
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                    <div class="glass-card rounded-2xl p-6 space-y-3 sm:space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-solana-purple/20 text-solana-purple flex items-center justify-center">
+                            <i data-lucide="smartphone" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white font-heading">Solana Mobile Stack (SMS)</h3>
+                        <p class="text-xs sm:text-sm text-slate-400">
+                            Expertise in integrating Seed Vault API, mobile wallet adapter specifications, and optimizing dApps for Solana Seeker & Saga hardware.
+                        </p>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 space-y-3 sm:space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-solana-emerald/20 text-solana-emerald flex items-center justify-center">
+                            <i data-lucide="cpu" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white font-heading">Smart Contracts & Rust</h3>
+                        <p class="text-xs sm:text-sm text-slate-400">
+                            Writing secure, gas-optimized Anchor programs, custom CPI handlers, and robust instruction parsers tailored for mobile rendering.
+                        </p>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 space-y-3 sm:space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-solana-emerald/20 text-solana-emerald flex items-center justify-center">
+                            <i data-lucide="layers" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white font-heading">Actions & Blinks</h3>
+                        <p class="text-xs sm:text-sm text-slate-400">
+                            Building portable Solana Actions and Blinks that render interactive blockchain transactions directly inside mobile browsers and social feeds.
+                        </p>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 space-y-3 sm:space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-solana-purple/20 text-solana-purple flex items-center justify-center">
+                            <i data-lucide="shield" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white font-heading">Hardware Security</h3>
+                        <p class="text-xs sm:text-sm text-slate-400">
+                            Implementing non-custodial key management, hardware-backed signers, and encrypted local state storage for high-value wallet apps.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Timeline Section -->
+        <section id="experience" class="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-solana-border">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-card text-xs font-mono text-solana-emerald">
+                    <i data-lucide="award" class="w-3.5 h-3.5"></i>
+                    Career Journey
+                </div>
+                <h2 class="text-2xl sm:text-5xl font-extrabold tracking-tight">Professional Experience</h2>
+                <p class="text-slate-400 text-sm sm:text-base">A track record of leading engineering teams and shipping category-defining Web3 mobile products.</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-6 sm:space-y-8 relative before:absolute before:inset-0 before:left-4 sm:before:left-1/2 before:-translate-x-px before:h-full before:w-0.5 before:bg-solana-border">
+                
+                <!-- Experience Item 1 -->
+                <div class="relative flex flex-col sm:flex-row items-start sm:justify-between group pl-10 sm:pl-0">
+                    <div class="order-1 sm:w-1/2 sm:pr-8 text-left sm:text-right mb-4 sm:mb-0">
+                        <div class="text-xs font-mono text-solana-emerald mb-1">2023 — PRESENT</div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white font-heading">Lead Solana Mobile Architect</h3>
+                        <div class="text-sm font-medium text-solana-purple mb-3">Apex Mobile Labs</div>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Spearheading mobile architecture for Solana Seeker and Saga. Launched 3 flagship dApps on Solana dApp Store with optimized RPC pooling.
+                        </p>
+                    </div>
+                    <div class="absolute left-4 sm:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-solana-obsidian border-2 border-solana-emerald flex items-center justify-center z-10 shadow-lg shadow-solana-emerald/20">
+                        <i data-lucide="smartphone" class="w-3.5 h-3.5 text-solana-emerald"></i>
+                    </div>
+                    <div class="order-2 sm:w-1/2 sm:pl-8 w-full">
+                        <div class="glass-card rounded-xl p-4 text-xs font-mono text-slate-300 space-y-2">
+                            <span class="text-solana-purple font-bold">Key Achievement:</span>
+                            <p>Integrated Seed Vault SDK across React Native apps, onboarding 120k+ hardware-secured users.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Item 2 -->
+                <div class="relative flex flex-col sm:flex-row items-start sm:justify-between group pl-10 sm:pl-0">
+                    <div class="order-1 sm:w-1/2 sm:pr-8 text-left sm:text-right mb-4 sm:mb-0 sm:order-2 sm:text-left sm:pl-8 sm:pr-0">
+                        <div class="text-xs font-mono text-solana-purple mb-1">2021 — 2023</div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white font-heading">Senior Web3 Full-Stack Developer</h3>
+                        <div class="text-sm font-medium text-solana-emerald mb-3">Solana Ecosystem Corp</div>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Developed mobile wallet adapter libraries and open-source SDK wrappers for React Native. Collaborated on Solana Actions specification rollout.
+                        </p>
+                    </div>
+                    <div class="absolute left-4 sm:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-solana-obsidian border-2 border-solana-purple flex items-center justify-center z-10 shadow-lg shadow-solana-purple/20">
+                        <i data-lucide="code" class="w-3.5 h-3.5 text-solana-purple"></i>
+                    </div>
+                    <div class="order-2 sm:w-1/2 sm:pl-8 sm:order-1 sm:pr-8 sm:pl-0 sm:text-right w-full">
+                        <div class="glass-card rounded-xl p-4 text-xs font-mono text-slate-300 space-y-2">
+                            <span class="text-solana-emerald font-bold">Key Achievement:</span>
+                            <p>Authored widely adopted mobile wallet connector plugin with over 1.2M npm downloads.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Item 3 -->
+                <div class="relative flex flex-col sm:flex-row items-start sm:justify-between group pl-10 sm:pl-0">
+                    <div class="order-1 sm:w-1/2 sm:pr-8 text-left sm:text-right mb-4 sm:mb-0">
+                        <div class="text-xs font-mono text-solana-emerald mb-1">2020 — 2021</div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white font-heading">Smart Contract & Mobile Engineer</h3>
+                        <div class="text-sm font-medium text-solana-purple mb-3">BlockChain Dynamics</div>
+                        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                            Built decentralized exchange mobile interfaces, optimized WebSocket state subscriptions, and implemented biometric authorization.
+                        </p>
+                    </div>
+                    <div class="absolute left-4 sm:left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-solana-obsidian border-2 border-solana-emerald flex items-center justify-center z-10 shadow-lg shadow-solana-emerald/20">
+                        <i data-lucide="cpu" class="w-3.5 h-3.5 text-solana-emerald"></i>
+                    </div>
+                    <div class="order-2 sm:w-1/2 sm:pl-8 w-full">
+                        <div class="glass-card rounded-xl p-4 text-xs font-mono text-slate-300 space-y-2">
+                            <span class="text-solana-purple font-bold">Key Achievement:</span>
+                            <p>Shipped first-generation multi-chain mobile wallet supporting Solana SPL token swaps.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Projects Showcase Section -->
+        <section id="projects" class="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-solana-border">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-card text-xs font-mono text-solana-purple">
+                    <i data-lucide="folder-git-2" class="w-3.5 h-3.5"></i>
+                    Portfolio Highlights
+                </div>
+                <h2 class="text-2xl sm:text-5xl font-extrabold tracking-tight">Featured Projects & dApps</h2>
+                <p class="text-slate-400 text-sm sm:text-base">Production-grade mobile dApps, Seeker utilities, and Solana ecosystem tools.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                
+                <!-- Project 1 -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between group transition-all duration-300 hover:-translate-y-1">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="p-3 rounded-xl bg-solana-purple/20 text-solana-purple group-hover:scale-110 transition-transform">
+                                <i data-lucide="smartphone" class="w-6 h-6"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-solana-emerald/10 text-solana-emerald font-mono text-xs border border-solana-emerald/30">
+                                Solana dApp Store
+                            </span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-white font-heading group-hover:text-solana-emerald transition-colors">SeekerSafe Mobile Wallet</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            A next-generation non-custodial mobile wallet optimized for Solana Seeker hardware. Features seamless Seed Vault biometric signing and instant token swaps.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">React Native</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">Rust / Anchor</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">Seed Vault API</span>
+                        </div>
+                    </div>
+                    <div class="pt-6 sm:pt-8 flex items-center justify-between border-t border-solana-border mt-6 sm:mt-8">
+                        <span class="text-xs font-mono text-slate-400">Downloads: 180k+</span>
+                        <a href="#contact" class="text-xs sm:text-sm font-semibold text-solana-emerald flex items-center gap-1 hover:underline">
+                            <span>Case Study</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between group transition-all duration-300 hover:-translate-y-1">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="p-3 rounded-xl bg-solana-emerald/20 text-solana-emerald group-hover:scale-110 transition-transform">
+                                <i data-lucide="zap" class="w-6 h-6"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-solana-purple/10 text-solana-purple font-mono text-xs border border-solana-purple/30">
+                                Solana Actions & Blinks
+                            </span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-white font-heading group-hover:text-solana-purple transition-colors">BlinkMobile Interface</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            A native mobile client capable of rendering and executing Solana Actions & Blinks directly inside mobile web browsers with biometric authorization.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">TypeScript</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">Solana Actions Spec</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">Tailwind</span>
+                        </div>
+                    </div>
+                    <div class="pt-6 sm:pt-8 flex items-center justify-between border-t border-solana-border mt-6 sm:mt-8">
+                        <span class="text-xs font-mono text-slate-400">Status: Production</span>
+                        <a href="#contact" class="text-xs sm:text-sm font-semibold text-solana-purple flex items-center gap-1 hover:underline">
+                            <span>Case Study</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between group transition-all duration-300 hover:-translate-y-1">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="p-3 rounded-xl bg-solana-purple/20 text-solana-purple group-hover:scale-110 transition-transform">
+                                <i data-lucide="credit-card" class="w-6 h-6"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-solana-emerald/10 text-solana-emerald font-mono text-xs border border-solana-emerald/30">
+                                Solana Pay SDK
+                            </span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-white font-heading group-hover:text-solana-emerald transition-colors">SolPay Native Wrapper</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            Lightweight React Native & Flutter SDK wrapper enabling merchant mobile point-of-sale terminals to accept USDC and SOL instant payments with zero intermediaries.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">React Native</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">Solana Pay Protocol</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">NFC Bridge</span>
+                        </div>
+                    </div>
+                    <div class="pt-6 sm:pt-8 flex items-center justify-between border-t border-solana-border mt-6 sm:mt-8">
+                        <span class="text-xs font-mono text-slate-400">Downloads: 45k+</span>
+                        <a href="#contact" class="text-xs sm:text-sm font-semibold text-solana-emerald flex items-center gap-1 hover:underline">
+                            <span>Case Study</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 flex flex-col justify-between group transition-all duration-300 hover:-translate-y-1">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="p-3 rounded-xl bg-solana-emerald/20 text-solana-emerald group-hover:scale-110 transition-transform">
+                                <i data-lucide="layers" class="w-6 h-6"></i>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-solana-purple/10 text-solana-purple font-mono text-xs border border-solana-purple/30">
+                                Developer Toolkit
+                            </span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl font-bold text-white font-heading group-hover:text-solana-purple transition-colors">Seeker dApp SDK Utilities</h3>
+                        <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                            Comprehensive open-source utility package for mobile developers building on Solana Mobile Stack. Includes pre-built UI components and hardware error recovery hooks.
+                        </p>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">TypeScript</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">SMS Core</span>
+                            <span class="px-2.5 py-1 rounded-lg bg-solana-obsidian border border-solana-border text-[11px] font-mono text-slate-300">Jest</span>
+                        </div>
+                    </div>
+                    <div class="pt-6 sm:pt-8 flex items-center justify-between border-t border-solana-border mt-6 sm:mt-8">
+                        <span class="text-xs font-mono text-slate-400">GitHub Stars: 920+</span>
+                        <a href="#contact" class="text-xs sm:text-sm font-semibold text-solana-purple flex items-center gap-1 hover:underline">
+                            <span>Case Study</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Interactive Skills Matrix Section -->
+        <section id="skills" class="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-solana-border">
+            <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-card text-xs font-mono text-solana-emerald">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                    Technical Stack
+                </div>
+                <h2 class="text-2xl sm:text-5xl font-extrabold tracking-tight">Interactive Skills Matrix</h2>
+                <p class="text-slate-400 text-sm sm:text-base">Filter through mobile, blockchain, and backend technologies.</p>
+            </div>
+
+            <!-- Tab Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
+                <button onclick="filterSkills('all')" class="skill-tab-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all bg-gradient-to-r from-solana-purple to-solana-emerald text-solana-obsidian font-bold shadow-md shadow-solana-purple/20" data-category="all">
+                    All Skills
+                </button>
+                <button onclick="filterSkills('mobile')" class="skill-tab-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all glass-card text-slate-300 hover:text-white" data-category="mobile">
+                    Mobile & SMS
+                </button>
+                <button onclick="filterSkills('blockchain')" class="skill-tab-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all glass-card text-slate-300 hover:text-white" data-category="blockchain">
+                    Blockchain & Solana
+                </button>
+                <button onclick="filterSkills('backend')" class="skill-tab-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all glass-card text-slate-300 hover:text-white" data-category="backend">
+                    Backend & Cloud
+                </button>
+                <button onclick="filterSkills('tools')" class="skill-tab-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all glass-card text-slate-300 hover:text-white" data-category="tools">
+                    Tools & DevOps
+                </button>
+            </div>
+
+            <!-- Skills Grid -->
+            <div id="skills-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                
+                <!-- Skill 1 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-purple transition-all" data-category="mobile">
+                    <div class="w-12 h-12 rounded-xl bg-solana-purple/20 text-solana-purple flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="smartphone" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">React Native</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-emerald font-mono">Expert • 5 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 2 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-emerald transition-all" data-category="blockchain">
+                    <div class="w-12 h-12 rounded-xl bg-solana-emerald/20 text-solana-emerald flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">Solana Mobile Stack</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-emerald font-mono">Expert • 3 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 3 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-purple transition-all" data-category="blockchain">
+                    <div class="w-12 h-12 rounded-xl bg-solana-purple/20 text-solana-purple flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">Rust & Anchor</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-purple font-mono">Advanced • 4 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 4 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-emerald transition-all" data-category="blockchain">
+                    <div class="w-12 h-12 rounded-xl bg-solana-emerald/20 text-solana-emerald flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">Actions & Blinks</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-emerald font-mono">Advanced • 2 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 5 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-purple transition-all" data-category="mobile">
+                    <div class="w-12 h-12 rounded-xl bg-solana-purple/20 text-solana-purple flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="tablet" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">Seed Vault API</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-purple font-mono">Expert • 3 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 6 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-emerald transition-all" data-category="backend">
+                    <div class="w-12 h-12 rounded-xl bg-solana-emerald/20 text-solana-emerald flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="server" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">Node.js & TypeScript</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-emerald font-mono">Expert • 6 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 7 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-purple transition-all" data-category="backend">
+                    <div class="w-12 h-12 rounded-xl bg-solana-purple/20 text-solana-purple flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="database" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">GraphQL & RPC Pools</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-purple font-mono">Advanced • 4 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 8 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-emerald transition-all" data-category="tools">
+                    <div class="w-12 h-12 rounded-xl bg-solana-emerald/20 text-solana-emerald flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="terminal" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">Solana CLI</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-emerald font-mono">Expert • 4 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 9 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-purple transition-all" data-category="tools">
+                    <div class="w-12 h-12 rounded-xl bg-solana-purple/20 text-solana-purple flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="git-branch" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">Git & CI/CD Pipelines</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-purple font-mono">Expert • 6 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 10 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-emerald transition-all" data-category="mobile">
+                    <div class="w-12 h-12 rounded-xl bg-solana-emerald/20 text-solana-emerald flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">Flutter & Dart</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-emerald font-mono">Advanced • 3 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 11 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-purple transition-all" data-category="blockchain">
+                    <div class="w-12 h-12 rounded-xl bg-solana-purple/20 text-solana-purple flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="shield" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">Web3.js & Ethers</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-purple font-mono">Expert • 5 yrs</span>
+                    </div>
+                </div>
+
+                <!-- Skill 12 -->
+                <div class="skill-item glass-card rounded-2xl p-5 sm:p-6 flex flex-col items-center text-center space-y-3 group hover:border-solana-emerald transition-all" data-category="backend">
+                    <div class="w-12 h-12 rounded-xl bg-solana-emerald/20 text-solana-emerald flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <i data-lucide="cloud" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm sm:text-base font-heading">AWS & Linux VPS</h4>
+                        <span class="text-[11px] sm:text-xs text-solana-emerald font-mono">Advanced • 4 yrs</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Interactive Contact & Footer Section -->
+        <section id="contact" class="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-solana-border">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12">
+                
+                <!-- Contact Info & Copyables -->
+                <div class="lg:col-span-5 space-y-6 sm:space-y-8">
+                    <div class="space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-card text-xs font-mono text-solana-emerald">
+                            <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+                            Get In Touch
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">Let's build the future of Solana Mobile.</h2>
+                        <p class="text-slate-400 text-sm sm:text-base">
+                            Whether you need a senior mobile architect for your Solana dApp, advisory on Seeker integration, or contract work—my inbox is open.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Copy Email Card -->
+                        <div class="glass-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="p-2.5 rounded-xl bg-solana-purple/20 text-solana-purple shrink-0">
+                                    <i data-lucide="mail" class="w-5 h-5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-[10px] sm:text-xs text-slate-400 font-mono">Direct Email</div>
+                                    <div class="text-xs sm:text-sm font-semibold text-white truncate">alex@solanamobile.cv</div>
+                                </div>
+                            </div>
+                            <button onclick="copyToClipboard('alex@solanamobile.cv', 'Email copied to clipboard!')" class="p-2.5 rounded-xl bg-solana-obsidian hover:bg-solana-purple/20 text-slate-300 hover:text-solana-purple transition-all border border-solana-border shrink-0" title="Copy Email">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <!-- Copy Telegram Card (@acetary) -->
+                        <div class="glass-card rounded-2xl p-4 flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3 min-w-0">
+                                <div class="p-2.5 rounded-xl bg-solana-emerald/20 text-solana-emerald shrink-0">
+                                    <i data-lucide="message-square" class="w-5 h-5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <div class="text-[10px] sm:text-xs text-slate-400 font-mono">Telegram Handle</div>
+                                    <div class="text-xs sm:text-sm font-semibold text-white truncate">@acetary</div>
+                                </div>
+                            </div>
+                            <button onclick="copyToClipboard('@acetary', 'Telegram handle @acetary copied!')" class="p-2.5 rounded-xl bg-solana-obsidian hover:bg-solana-emerald/20 text-slate-300 hover:text-solana-emerald transition-all border border-solana-border shrink-0" title="Copy Telegram">
+                                <i data-lucide="copy" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+
+                        <!-- Socials -->
+                        <div class="flex flex-wrap items-center gap-3 pt-2">
+                            <a href="https://github.com" target="_blank" class="px-4 py-2.5 rounded-xl glass-card text-slate-300 hover:text-solana-emerald hover:border-solana-emerald transition-all flex items-center gap-2 text-xs sm:text-sm font-medium">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" class="px-4 py-2.5 rounded-xl glass-card text-slate-300 hover:text-solana-purple hover:border-solana-purple transition-all flex items-center gap-2 text-xs sm:text-sm font-medium">
+                                <i data-lucide="twitter" class="w-4 h-4"></i>
+                                <span>X (Twitter)</span>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" class="px-4 py-2.5 rounded-xl glass-card text-slate-300 hover:text-solana-emerald hover:border-solana-emerald transition-all flex items-center gap-2 text-xs sm:text-sm font-medium">
+                                <i data-lucide="linkedin" class="w-4 h-4"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Form -->
+                <div class="lg:col-span-7">
+                    <div class="glass-card rounded-2xl p-6 sm:p-8 relative">
+                        <h3 class="text-lg sm:text-xl font-bold text-white font-heading mb-6 flex items-center gap-2">
+                            <i data-lucide="send" class="w-5 h-5 text-solana-emerald"></i>
+                            Send a Secure Message
+                        </h3>
+
+                        <form id="contact-form" onsubmit="handleFormSubmit(event)" class="space-y-4 sm:space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                                <div class="space-y-2">
+                                    <label class="block text-xs font-mono text-slate-400">YOUR NAME</label>
+                                    <input type="text" id="form-name" required placeholder="Satoshi Nakamoto" class="w-full px-4 py-3 rounded-xl bg-solana-obsidian border border-solana-border text-white placeholder-slate-600 focus:outline-none focus:border-solana-purple transition-colors text-sm">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="block text-xs font-mono text-slate-400">YOUR EMAIL / TG</label>
+                                    <input type="text" id="form-contact" required placeholder="satoshi@solana.com" class="w-full px-4 py-3 rounded-xl bg-solana-obsidian border border-solana-border text-white placeholder-slate-600 focus:outline-none focus:border-solana-purple transition-colors text-sm">
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <label class="block text-xs font-mono text-slate-400">PROJECT / CONTRACT SCOPE</label>
+                                <textarea id="form-message" rows="4" required placeholder="Describe your Solana mobile project, timeline, and requirements..." class="w-full px-4 py-3 rounded-xl bg-solana-obsidian border border-solana-border text-white placeholder-slate-600 focus:outline-none focus:border-solana-purple transition-colors text-sm resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-solana-purple to-solana-emerald text-solana-obsidian font-bold hover:opacity-95 shadow-lg shadow-solana-purple/20 transition-all flex items-center justify-center gap-2 text-sm sm:text-base">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                                <span>Transmit Secure Message</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-solana-border bg-solana-card/40 text-center text-xs text-slate-500 font-mono">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            <div class="flex items-center justify-center gap-2 text-slate-400">
+                <i data-lucide="shield-check" class="w-4 h-4 text-solana-emerald"></i>
+                <span>solanamobile.cv • Powered by Solana Mobile Stack</span>
+            </div>
+            <p>&copy; 2026 Alex Rivera (@acetary). All rights reserved. Built with zero downtime.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Interactivity -->
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle with smooth behavior & outside click closing
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Simulated live Solana TPS Ticker update
+        setInterval(() => {
+            const randomTps = Math.floor(Math.random() * (3500 - 3000 + 1)) + 3000;
+            const ticker = document.getElementById('tps-ticker');
+            if (ticker) {
+                ticker.textContent = `Solana Mainnet-Beta: ${randomTps.toLocaleString()} TPS • Seeker & Saga Ready`;
+            }
+        }, 4000);
+
+        // Toast Notification System
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `glass-card p-4 rounded-xl flex items-center gap-3 shadow-2xl border ${type === 'success' ? 'border-solana-emerald text-white' : 'border-purple-500 text-white'} pointer-events-auto transition-all transform translate-y-2 opacity-0`;
+            
+            const iconName = type === 'success' ? 'check-circle' : 'info';
+            toast.innerHTML = `
+                <i data-lucide="${iconName}" class="w-5 h-5 ${type === 'success' ? 'text-solana-emerald' : 'text-solana-purple'} shrink-0"></i>
+                <span class="text-sm font-medium">${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Copy to clipboard with bulletproof fallback
+        function copyToClipboard(text, successMessage) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast(successMessage);
+                }).catch(() => {
+                    fallbackCopy(text, successMessage);
+                });
+            } else {
+                fallbackCopy(text, successMessage);
+            }
+        }
+
+        function fallbackCopy(text, successMessage) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast(successMessage);
+                } else {
+                    showToast('Failed to copy', 'error');
+                }
+            } catch (err) {
+                showToast('Failed to copy', 'error');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        // Skills Filter Tab Logic
+        function filterSkills(category) {
+            const tabs = document.querySelectorAll('.skill-tab-btn');
+            tabs.forEach(tab => {
+                if (tab.getAttribute('data-category') === category) {
+                    tab.className = 'skill-tab-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all bg-gradient-to-r from-solana-purple to-solana-emerald text-solana-obsidian font-bold shadow-md shadow-solana-purple/20';
+                } else {
+                    tab.className = 'skill-tab-btn px-4 sm:px-5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all glass-card text-slate-300 hover:text-white';
+                }
+            });
+
+            const items = document.querySelectorAll('.skill-item');
+            items.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                if (category === 'all' || itemCategory === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // PDF CV Download Simulation
+        function downloadCV() {
+            showToast('Preparing PDF CV export...');
+            setTimeout(() => {
+                window.print();
+            }, 800);
+        }
+
+        // Contact Form Submission Handler
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById('form-name').value;
+            const contact = document.getElementById('form-contact').value;
+            const message = document.getElementById('form-message').value;
+
+            if (!name || !contact || !message) {
+                showToast('Please fill out all fields.', 'error');
+                return;
+            }
+
+            showToast('Message transmitted securely via Solana node!');
+            document.getElementById('contact-form').reset();
+        }
+    </script>
+</body>
+</html>
